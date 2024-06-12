@@ -20,6 +20,8 @@ export default defineManifest(async (env) => ({
   // key: '',
   action: {
     default_popup: 'src/popup/index.html',
+    default_title: '臻臻-AI语言学习助手',
+    default_icon: 'src/assets/logo.png',
   },
   background: {
     service_worker: 'src/background/index.ts',
@@ -27,7 +29,7 @@ export default defineManifest(async (env) => ({
   },
   content_scripts: [
     {
-      all_frames: false,
+      all_frames: true,
       js: ['src/content-script/index.ts'],
       matches: ['*://*/*'],
       run_at: 'document_end',
@@ -35,7 +37,22 @@ export default defineManifest(async (env) => ({
   ],
   offline_enabled: false,
   host_permissions: [],
-  permissions: ['storage', 'tabs', 'background'],
+  permissions: [
+    '<all_urls>',
+    'storage',
+    'clipboardWrite',
+    'clipboardRead',
+    'activeTab',
+    'webRequest',
+    'storage',
+    'tabs',
+    'cookies',
+    'notifications',
+    'alarms',
+    'webRequestBlocking',
+    'contextMenus',
+    'background'
+  ],
   web_accessible_resources: [
     {
       matches: ['*://*/*'],
@@ -44,7 +61,7 @@ export default defineManifest(async (env) => ({
     {
       matches: ['*://*/*'],
       resources: ['src/content-script/iframe/index.html'],
-    },
+    }
   ],
   icons: {
     16: 'src/assets/logo.png',
